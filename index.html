@@ -8,9 +8,27 @@
     <title>Henris Würfelspiel</title> 
 
     <link id="style1" rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
+<script>
+  const App = Vue.createApp({
+    data(){
+      return{
+        style: "style.css"
+      }
+    },
+    methods: {}
+  });
+
+  App.mount('#app')
+
+</script>
+
 <body class="container">
+
+  <div id="app">
+
   <h1 id="h1" class="item">Würfelspiel Kniffel</h1>
 
   <div class="container">
@@ -26,6 +44,9 @@
     <button class="button" type="submit">Spiel Starten!</button>
     </div>
   </form>
+  </div>
+
+
 </body>
 
 </html>
