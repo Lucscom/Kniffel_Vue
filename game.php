@@ -89,23 +89,27 @@
             3 => (int)$row['dicelocked4'],
             4 => (int)$row['dicelocked5'],
         );
-        // Roll all enabled dices
-        $dice = array(
-            0 => $dicelocked[0] == 0 ? rand(1,6) : (int)$row['diceScore1'],
-            1 => $dicelocked[1] == 0 ? rand(1,6) : (int)$row['diceScore2'],
-            2 => $dicelocked[2] == 0 ? rand(1,6) : (int)$row['diceScore3'],
-            3 => $dicelocked[3] == 0 ? rand(1,6) : (int)$row['diceScore4'],
-            4 => $dicelocked[4] == 0 ? rand(1,6) : (int)$row['diceScore5'],
-        );
+        $rollCounter = (int)$row['rollCounter'];
 
+        if($rollCounter < 3) {
+            // Roll all enabled dices
+            $dice = array(
+                0 => $dicelocked[0] == 0 ? rand(1, 6) : (int)$row['diceScore1'],
+                1 => $dicelocked[1] == 0 ? rand(1, 6) : (int)$row['diceScore2'],
+                2 => $dicelocked[2] == 0 ? rand(1, 6) : (int)$row['diceScore3'],
+                3 => $dicelocked[3] == 0 ? rand(1, 6) : (int)$row['diceScore4'],
+                4 => $dicelocked[4] == 0 ? rand(1, 6) : (int)$row['diceScore5'],
+            );
 
-        $rollCounter = (int)$row['rollCounter'] + 1;
+            $rollCounter = (int)$row['rollCounter'] + 1;
 
-        // ##### Update activeRound Values #####
-        $sql = "UPDATE `activeround` SET `rollCounter`= {$rollCounter},`diceScore1`={$dice[0]},`diceScore2`={$dice[1]},`diceScore3`={$dice[2]},`diceScore4`={$dice[3]},`diceScore5`={$dice[4]} WHERE 1";
-        $result = mysqli_query($conn, $sql);
+            // ##### Update activeRound Values #####
+            $sql = "UPDATE `activeround` SET `rollCounter`= {$rollCounter},`diceScore1`={$dice[0]},`diceScore2`={$dice[1]},`diceScore3`={$dice[2]},`diceScore4`={$dice[3]},`diceScore5`={$dice[4]} WHERE 1";
+            $result = mysqli_query($conn, $sql);
 
-        $conn->close();
+            $conn->close();
+
+        }
 
         sendAllValues();
     }
