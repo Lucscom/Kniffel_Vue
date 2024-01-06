@@ -191,6 +191,8 @@ createApp({
         },
 
         async rollDices() {
+            var audio = new Audio('sound/dice.mp3')
+            audio.play()
             this.allDisabled = false
 
             if (this.rollCounter >= 3) {
