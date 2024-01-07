@@ -238,6 +238,10 @@ createApp({
                 this.player_name_2 = response.data.player_name_2
                 this.allDisabled = true
 
+                if(response.data.endpage === true){
+                    window.location.href = "endpage.html";
+                }
+
             } catch (error) {
                 console.error(error);
             }
@@ -254,15 +258,6 @@ createApp({
             }
 
             // check for special score buttons
-            // for (var i = 0; i < 6; i++) {
-            //
-            //     if (this.scoreList[i].locked[this.activePlayer] == false) {
-            //         this.scoreList[i].possible[this.activePlayer] = true
-            //     }
-            //     if (this.scoreList[i].locked[this.activePlayer] == false) {
-            //         this.scoreList[i].possible[this.activePlayer] = true
-            //     }
-            // }
             if (this.scoreList[9].locked[this.activePlayer] == false && this.checkPasch(3)) {
                 this.scoreList[9].possible[this.activePlayer] = true
             }
@@ -281,10 +276,6 @@ createApp({
             if (this.scoreList[14].locked[this.activePlayer] == false && this.checkPasch(5)) {
                 this.scoreList[14].possible[this.activePlayer] = true
             }
-            // if (this.scoreList[15].locked[this.activePlayer] == false) {
-            //     this.scoreList[15].possible[this.activePlayer] = true
-            // }
-
         },
 
         checkNumberFrequency(number, freq) {

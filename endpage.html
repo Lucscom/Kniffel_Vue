@@ -1,0 +1,75 @@
+<script type="importmap">
+    {
+      "imports": {
+        "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
+      }
+    }
+</script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>Kniffel</title>
+    <link id="style1" rel="stylesheet" href="style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+</head>
+
+<body class="container">
+    <div id="app" class="container">
+
+        <h1 id="h1" class="item">Das Spiel ist vorbei!</h1>
+
+        <div class="item">
+            <p class="text" v-if="score_player_1 > score_player_2">Spieler {{player_name_1}} hat gewonnen!</p>
+            <p class="text" v-else-if="score_player_1 < score_player_2">Spieler {{player_name_2}} hat gewonnen!</p>
+            <p class="text" v-else>Unentschieden!</p>
+        </div>
+        <div class="item">
+            <p>Punkte {{player_name_1}}: {{score_player_1}}</p>
+        </div>
+        <div class="item">
+            <p>Punkte {{player_name_2}}: {{score_player_2}}</p>
+        </div>
+        <div class="item">
+            <button @click="exitGame" class="button">Erneut spielen</button>
+        </div>
+    </div>
+</body>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script type="module">
+    import { createApp } from 'vue'
+
+    createApp({
+        data() {
+            return {
+                player_name_1: 'Player 1',
+                player_name_2: 'Player 2',
+                score_player_1: 10,
+                score_player_2: 5,
+            }
+        },
+        methods: {
+            exitGame() {
+                window.location.href = "index.html";
+            }
+        },
+        async mounted() {
+            try {
+                const response = await axios.post('http://localhost/game.php', {
+                    type: "endPage"
+                });
+
+                this.player_name_1 = response.data.player_name_1;
+                this.player_name_2 = response.data.player_name_2;
+                this.score_player_1 = response.data.score_player_1;
+                this.score_player_2 = response.data.score_player_2;
+
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }).mount('#app')
+</script>

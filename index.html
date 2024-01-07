@@ -20,11 +20,13 @@
         <h1 id="h1" class="item">Würfelspiel Kniffel</h1>
         <div class="item">
             <p class="item">Spielername 1:</p>
-            <input v-model="player_name_1" class="item" placeholder="Enter player 1 name">
+            <input v-if="nameEmtyAlert" v-if="player_name_1 == ''" v-model="player_name_1" class="inputAlert" placeholder="Enter player 1 name">
+            <input v-else v-model="player_name_1" class="input" placeholder="Enter player 1 name">
         </div>
         <div class="item">
             <p class="item">Spielername 2:</p>
-            <input v-model="player_name_2" class="item" placeholder="Enter player 2 name">
+            <input v-if="nameEmtyAlert" v-if="player_name_2 == ''" v-model="player_name_2" class="inputAlert" placeholder="Enter player 2 name">
+            <input v-else v-model="player_name_2" class="input" placeholder="Enter player 2 name">
         </div>
         <div class="container">
             <button @click="startGame" class="button" >Spiel Starten!</button>
@@ -40,21 +42,25 @@
     createApp({
       data() {
         return {
-          player_name_1: '',
+            player_name_1: '',
             player_name_2: '',
+            nameEmtyAlert: false,
 
         }
       },
       methods: {
         async startGame() {
-            console.log(this.player_name_1)
+            if(this.player_name_1 == '' || this.player_name_2 == ''){
+                this.nameEmtyAlert = true;
+                return
+            }
+
           try {
             const response = await axios.post('http://localhost/initiate_game.php', {
               player1: this.player_name_1,
               player2: this.player_name_2
             });
 
-            console.log(response.data);
           } catch (error) {
             console.error(error);
           }
