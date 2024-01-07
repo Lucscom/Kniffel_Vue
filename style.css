@@ -13,7 +13,7 @@
 
 .item {
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   margin: 10px;
   text-align: center;
   padding: 10px;
