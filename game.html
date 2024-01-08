@@ -22,6 +22,11 @@
     <div id="app" class="container">
         <h1 class="item">Kniffelspaß!</h1>
         <div class="item">
+            <p class="text" v-if="activePlayer == 0" class="item">Spieler {{player_name_1}} ist am Zug</p>
+            <p class="text" v-else class="item">Spieler {{player_name_2}} ist am Zug</p>
+        </div>
+
+        <div class="item">
             <div class="item" style="flex-flow: column">
                 <div v-for="button in buttonList" :key="button.id">
                     <button v-if="button.locked" class="dice"

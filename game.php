@@ -305,6 +305,35 @@
         sendAllValues();
     }
 
+    elseif($data['type'] == "endPage"){
+
+        // Get final score
+        $sql = "SELECT * FROM `score` ORDER BY `score`.`id` DESC LIMIT 1, 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        $player1 = $row['playername'];
+        $score_player_1 = $row['gesamt'];
+
+        $sql = "SELECT * FROM `score` ORDER BY `score`.`id` DESC LIMIT 1";
+        $result = mysqli_query($conn, $sql);
+        $row = mysqli_fetch_assoc($result);
+
+        $player2 = $row['playername'];
+        $score_player_2 = $row['gesamt'];
+
+        $scorejson = array(
+            'player_name_1' => $player1,
+            'player_name_2' => $player2,
+            'score_player_1' => $score_player_1,
+            'score_player_2' => $score_player_2,
+        );
+
+        echo json_encode($scorejson);
+
+        $conn->close();
+    }
+
     function sendAllValues(){
 
         $servername = "localhost";
@@ -387,6 +416,14 @@
             17 => $row['gesamt'],
         );
 
+        $endPage = true;
+
+        for ($i = 0; $i < 18; $i++) {
+            if ($score1[$i] == NULL || $score2[$i] == NULL) {
+                $endPage = false;
+            }
+        }
+
         // get activeRound values
         $sql = "SELECT * FROM `activeround` WHERE 1";
         $result = mysqli_query($conn, $sql);
@@ -451,12 +488,12 @@
             'activePlayer' => $activePlayerNum,
             'player_name_1' => $player1,
             'player_name_2' => $player2,
+            'endpage' => $endPage,
         );
 
         $conn->close();
 
         echo json_encode($sendingJson);
-
     }
 
     function createScoreObject($id, $name, $activePlayer, $score1, $score2, $scoreCounter){
