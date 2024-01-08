@@ -173,7 +173,6 @@ createApp({
             // console.log(this.buttonList[id - 1].value)
             // end of debug code
 
-            this.buttonList[id - 1].locked = !this.buttonList[id - 1].locked
             // send clicked button id to server, receive updated dice array
             try {
                 const response = await axios.post('http://localhost/game.php', {
