@@ -20,13 +20,11 @@
         <h1 id="h1" class="item">Würfelspiel Kniffel</h1>
         <div class="item">
             <p class="item">Spielername 1:</p>
-            <input v-if="nameEmtyAlert" v-if="player_name_1 == ''" v-model="player_name_1" class="inputAlert" placeholder="Enter player 1 name">
-            <input v-else v-model="player_name_1" class="input" placeholder="Enter player 1 name">
+            <input v-model="player_name_1" class="input" :class="{ 'inputAlert': (nameEmtyAlert && player_name_1 == '')}" placeholder="Enter player 1 name">
         </div>
         <div class="item">
             <p class="item">Spielername 2:</p>
-            <input v-if="nameEmtyAlert" v-if="player_name_2 == ''" v-model="player_name_2" class="inputAlert" placeholder="Enter player 2 name">
-            <input v-else v-model="player_name_2" class="input" placeholder="Enter player 2 name">
+            <input v-model="player_name_2" class="input" :class="{ 'inputAlert': (nameEmtyAlert && player_name_2 == '')}" placeholder="Enter player 2 name">
         </div>
         <div class="container">
             <button @click="startGame" class="button" >Spiel Starten!</button>
